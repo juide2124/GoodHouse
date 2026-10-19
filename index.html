@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="免費房貸試算器：輸入月薪、房屋總價、自備款、利率與貸款年限，即時計算每月房貸、總利息及負擔比例。">
-<title>個人購屋預算試算器｜月薪4萬可以買房嗎？</title>
+<meta name="description" content="預見地產-游小蓁的地產頻道免費房貸試算器：輸入月薪、房屋總價、自備款、利率與貸款年限，即時計算每月房貸、總利息及負擔比例。">
+<title>預見地產-游小蓁的地產頻道｜免費個人購屋預算試算器</title>
 <style>
-:root{color-scheme:light;--ink:#17324a;--muted:#607387;--accent:#146b83;--bg:#f2f7fa;--line:#dce5ec;--warning:#ad551a;--success:#176f50}
+:root{color-scheme:light;--ink:#192d42;--muted:#657589;--accent:#116b74;--bg:#f2f6f7;--line:#d8e2e4;--warning:#a65616;--success:#176f50}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC","Microsoft JhengHei",sans-serif;line-height:1.55}
 .calculator{max-width:920px;margin:34px auto;padding:28px;background:white;border-radius:20px;box-shadow:0 12px 36px #17324a13}
 h1{font-size:clamp(1.55rem,3vw,2rem);margin:0 0 8px}p.lead{margin:0 0 25px;color:var(--muted)}
@@ -14,11 +14,20 @@ h1{font-size:clamp(1.55rem,3vw,2rem);margin:0 0 8px}p.lead{margin:0 0 25px;color
 .output{background:#eff7f9;border:1px solid #d7e9ed;border-radius:16px;padding:22px;align-self:start}.kicker{color:var(--muted);font-weight:700;font-size:.9rem}.big{font-weight:800;font-size:clamp(1.8rem,4vw,2.55rem);line-height:1.2;margin:6px 0 14px;color:#095a73}.metric{display:flex;justify-content:space-between;gap:12px;padding:11px 0;border-bottom:1px solid var(--line)}.metric strong{text-align:right;font-variant-numeric:tabular-nums}.bar{height:12px;border-radius:20px;background:#d5e3e9;overflow:hidden;margin-top:9px}.fill{height:100%;background:var(--accent);width:0;transition:width .2s}.status{margin:13px 0 0;font-weight:700}.ok{color:var(--success)}.caution{color:var(--warning)}.danger{color:#ae3232}.note{border-top:1px solid var(--line);padding-top:16px;margin-top:23px;color:var(--muted);font-size:.86rem}.actions{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap}button{font:inherit;font-weight:700;border-radius:10px;border:1px solid var(--accent);padding:10px 15px;cursor:pointer}button.primary{color:white;background:var(--accent)}button.secondary{color:var(--accent);background:white}button:focus-visible{outline:3px solid #146b8355;outline-offset:2px}.error{color:#ae3232;font-weight:700;min-height:1.5em;margin-top:6px}
 @media(max-width:700px){.calculator{margin:12px;padding:19px;border-radius:14px}.layout{grid-template-columns:1fr;gap:4px}.output{padding:18px}}
 @media(prefers-reduced-motion:reduce){.fill{transition:none}}
+
+.brand-header{max-width:920px;margin:24px auto 0;padding:0 8px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+.brand-name{font-size:1.24rem;font-weight:850;letter-spacing:.04em;color:var(--ink)}
+.brand-caption{font-size:.82rem;color:var(--muted)}
+.brand-link,.brand-footer a{color:var(--accent);font-weight:700;text-decoration:none}
+.brand-link:hover,.brand-footer a:hover{text-decoration:underline}
+.brand-footer{max-width:920px;margin:0 auto 35px;padding:0 16px;text-align:center;color:var(--muted);font-size:.88rem}
+@media(max-width:700px){.brand-header{margin:16px 12px 0}.brand-link{font-size:.9rem}.brand-footer{margin-bottom:24px}}
 </style>
 </head>
 <body>
+<header class="brand-header"><div><div class="brand-name">🏡 預見地產-游小蓁的地產頻道</div><div class="brand-caption">用簡單的試算，找到適合自己的購屋預算</div></div><a class="brand-link" href="https://www.rtube.com.tw/@GoodHouse" target="_blank" rel="noopener noreferrer">返回預見地產頻道 ↗</a></header>
 <main class="calculator" id="mortgage-calculator">
-<h1>🏠 個人購屋預算試算器</h1>
+<h1>🏠 預見地產-游小蓁的地產頻道｜個人購屋預算試算器</h1>
 <p class="lead">調整購屋條件，即時了解每月房貸、自備款及房貸占月薪的比例。</p>
 <div class="layout">
 <section aria-label="試算條件">
@@ -43,6 +52,7 @@ h1{font-size:clamp(1.55rem,3vw,2rem);margin:0 0 8px}p.lead{margin:0 0 25px;color
 </div>
 <p class="note">試算假設：全期採輸入的固定年利率、按月本息平均攤還、無寬限期。負擔比例僅為一般預算參考，非銀行核貸標準；未含契稅、代書費、仲介費、裝修、保險、管理費及其他持有成本。實際房貸條件以銀行審核與合約為準。若有其他貸款或固定支出，應另外列入評估。</p>
 </main>
+<footer class="brand-footer">由 <strong>預見地產-游小蓁的地產頻道</strong> 提供 · <a href="https://www.rtube.com.tw/@GoodHouse" target="_blank" rel="noopener noreferrer">觀看更多房產知識文章 ↗</a></footer>
 <script>
 (()=>{'use strict';
 const ids=['income','price','down','rate','years'];
