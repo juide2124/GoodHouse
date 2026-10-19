@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="免費房貸試算器：輸入月薪、房屋總價、自備款、利率與貸款年限，即時計算每月房貸、總利息及負擔比例。">
+<title>個人購屋預算試算器｜月薪4萬可以買房嗎？</title>
+<style>
+:root{color-scheme:light;--ink:#17324a;--muted:#607387;--accent:#146b83;--bg:#f2f7fa;--line:#dce5ec;--warning:#ad551a;--success:#176f50}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans TC","Microsoft JhengHei",sans-serif;line-height:1.55}
+.calculator{max-width:920px;margin:34px auto;padding:28px;background:white;border-radius:20px;box-shadow:0 12px 36px #17324a13}
+h1{font-size:clamp(1.55rem,3vw,2rem);margin:0 0 8px}p.lead{margin:0 0 25px;color:var(--muted)}
+.layout{display:grid;grid-template-columns:1.1fr .9fr;gap:26px}.field{margin:0 0 19px}.field label{display:block;font-size:.98rem;font-weight:700;margin-bottom:7px}.input-wrap{display:flex;align-items:center;border:1px solid #b6c9d6;border-radius:10px;background:#fff;overflow:hidden}.input-wrap:focus-within{outline:3px solid #146b8333;border-color:var(--accent)}input[type=number],select{font:inherit;width:100%;height:47px;padding:10px 12px;border:0;outline:none;background:white;color:var(--ink);min-width:0}select{border:1px solid #b6c9d6;border-radius:10px} .unit{white-space:nowrap;color:var(--muted);padding:0 12px}small{display:block;color:var(--muted);margin-top:4px;font-size:.8rem}
+.output{background:#eff7f9;border:1px solid #d7e9ed;border-radius:16px;padding:22px;align-self:start}.kicker{color:var(--muted);font-weight:700;font-size:.9rem}.big{font-weight:800;font-size:clamp(1.8rem,4vw,2.55rem);line-height:1.2;margin:6px 0 14px;color:#095a73}.metric{display:flex;justify-content:space-between;gap:12px;padding:11px 0;border-bottom:1px solid var(--line)}.metric strong{text-align:right;font-variant-numeric:tabular-nums}.bar{height:12px;border-radius:20px;background:#d5e3e9;overflow:hidden;margin-top:9px}.fill{height:100%;background:var(--accent);width:0;transition:width .2s}.status{margin:13px 0 0;font-weight:700}.ok{color:var(--success)}.caution{color:var(--warning)}.danger{color:#ae3232}.note{border-top:1px solid var(--line);padding-top:16px;margin-top:23px;color:var(--muted);font-size:.86rem}.actions{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap}button{font:inherit;font-weight:700;border-radius:10px;border:1px solid var(--accent);padding:10px 15px;cursor:pointer}button.primary{color:white;background:var(--accent)}button.secondary{color:var(--accent);background:white}button:focus-visible{outline:3px solid #146b8355;outline-offset:2px}.error{color:#ae3232;font-weight:700;min-height:1.5em;margin-top:6px}
+@media(max-width:700px){.calculator{margin:12px;padding:19px;border-radius:14px}.layout{grid-template-columns:1fr;gap:4px}.output{padding:18px}}
+@media(prefers-reduced-motion:reduce){.fill{transition:none}}
+</style>
+</head>
+<body>
+<main class="calculator" id="mortgage-calculator">
+<h1>🏠 個人購屋預算試算器</h1>
+<p class="lead">調整購屋條件，即時了解每月房貸、自備款及房貸占月薪的比例。</p>
+<div class="layout">
+<section aria-label="試算條件">
+<div class="field"><label for="income">每月收入（新台幣）</label><div class="input-wrap"><input id="income" type="number" min="1" step="1000" value="40000" inputmode="numeric"><span class="unit">元</span></div></div>
+<div class="field"><label for="price">房屋總價</label><div class="input-wrap"><input id="price" type="number" min="1" step="50" value="500" inputmode="decimal"><span class="unit">萬元</span></div></div>
+<div class="field"><label for="down">頭期款比例</label><div class="input-wrap"><input id="down" type="number" min="0" max="100" step="5" value="20" inputmode="decimal"><span class="unit">%</span></div><small>例：20% 代表以房價的兩成作為頭期款；不代表銀行保證核貸八成。</small></div>
+<div class="field"><label for="rate">房貸年利率</label><div class="input-wrap"><input id="rate" type="number" min="0" max="30" step="0.1" value="2.5" inputmode="decimal"><span class="unit">%</span></div></div>
+<div class="field"><label for="years">貸款年限</label><select id="years"><option value="20">20 年</option><option value="30" selected>30 年</option><option value="40">40 年</option></select></div>
+<div class="actions"><button type="button" class="secondary" id="reset">恢復預設值</button><button type="button" class="primary" id="copy">複製試算結果</button></div>
+<div class="error" id="error" role="alert"></div>
+</section>
+<section class="output" aria-label="試算結果" aria-live="polite">
+<div class="kicker">預估每月應繳房貸</div><div class="big" id="monthly">—</div>
+<div class="metric"><span>頭期款</span><strong id="downAmt">—</strong></div>
+<div class="metric"><span>貸款本金</span><strong id="principal">—</strong></div>
+<div class="metric"><span>房貸總利息</span><strong id="interest">—</strong></div>
+<div class="metric"><span>總還款金額</span><strong id="total">—</strong></div>
+<div class="metric"><span>占每月收入比例</span><strong id="ratio">—</strong></div>
+<div class="bar" role="img" aria-label="房貸月付金占收入比例"><div class="fill" id="fill"></div></div>
+<p class="status" id="status">—</p>
+</section>
+</div>
+<p class="note">試算假設：全期採輸入的固定年利率、按月本息平均攤還、無寬限期。負擔比例僅為一般預算參考，非銀行核貸標準；未含契稅、代書費、仲介費、裝修、保險、管理費及其他持有成本。實際房貸條件以銀行審核與合約為準。若有其他貸款或固定支出，應另外列入評估。</p>
+</main>
+<script>
+(()=>{'use strict';
+const ids=['income','price','down','rate','years'];
+const el=id=>document.getElementById(id);
+const money=n=>new Intl.NumberFormat('zh-TW',{style:'currency',currency:'TWD',maximumFractionDigits:0}).format(Math.round(n));
+let lastText='';
+function update(){
+const income=Number(el('income').value),price=Number(el('price').value),down=Number(el('down').value),rate=Number(el('rate').value),years=Number(el('years').value);
+const valid=ids.every(id=>el(id).value.trim()!=='')&&[income,price,down,rate,years].every(Number.isFinite)&&income>0&&price>0&&down>=0&&down<=100&&rate>=0&&rate<=30&&[20,30,40].includes(years);
+if(!valid){el('error').textContent='請輸入有效數值：收入與房價須大於0、頭期款0～100%、利率0～30%。';['monthly','downAmt','principal','interest','total','ratio','status'].forEach(id=>el(id).textContent='—');el('fill').style.width='0%';lastText='';return;}
+el('error').textContent='';
+const downAmt=price*10000*down/100,principal=price*10000-downAmt,n=years*12,r=rate/1200;
+const monthly=principal===0?0:r===0?principal/n:principal*r/(1-Math.pow(1+r,-n));
+const total=monthly*n,interest=Math.max(0,total-principal),ratio=monthly/income*100;
+el('monthly').textContent=money(monthly);el('downAmt').textContent=money(downAmt);el('principal').textContent=money(principal);el('interest').textContent=money(interest);el('total').textContent=money(total);el('ratio').textContent=ratio.toFixed(1)+'%';el('fill').style.width=Math.min(100,ratio)+'%';
+const status=el('status');status.className='status '+(ratio<=30?'ok':ratio<=35?'caution':'danger');status.textContent=ratio<=30?'負擔占比在30%以內，仍需評估日常支出。':ratio<=35?'負擔占比在30%～35%，請保留足夠生活預算。':'房貸占比超過35%，建議審慎評估財務壓力。';
+lastText=`房屋總價：${price}萬元\n月薪：${money(income)}\n頭期款：${money(downAmt)}（${down}%）\n貸款本金：${money(principal)}\n利率：${rate}%\n年限：${years}年\n每月房貸：${money(monthly)}\n總利息：${money(interest)}\n總還款：${money(total)}\n月薪負擔占比：${ratio.toFixed(1)}%\n（僅供試算參考）`;
+}
+ids.forEach(id=>el(id).addEventListener('input',update));
+el('reset').addEventListener('click',()=>{Object.entries({income:40000,price:500,down:20,rate:2.5,years:30}).forEach(([key,value])=>el(key).value=value);update();});
+el('copy').addEventListener('click',async()=>{if(!lastText)return;try{await navigator.clipboard.writeText(lastText);el('copy').textContent='已複製';setTimeout(()=>el('copy').textContent='複製試算結果',1500);}catch{el('error').textContent='瀏覽器無法自動複製，請使用 HTTPS 網站並允許剪貼簿權限。';}});
+update();
+})();
+</script>
+</body>
+</html>
